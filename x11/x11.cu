@@ -9,7 +9,7 @@ extern "C" {
 #include "sph/sph_cubehash.h"
 #include "sph/sph_shavite.h"
 #include "sph/sph_simd.h"
-#include "sph/sph_echo.h"
+// #include "sph/sph_echo.h"
 }
 
 #include "miner.h"
@@ -38,7 +38,7 @@ extern "C" void x11hash(void *output, const void *input)
 	sph_cubehash512_context ctx_cubehash;
 	sph_shavite512_context ctx_shavite;
 	sph_simd512_context ctx_simd;
-	sph_echo512_context ctx_echo;
+	// sph_echo512_context ctx_echo;
 
 	sph_blake512_init(&ctx_blake);
 	sph_blake512 (&ctx_blake, input, 80);
@@ -80,9 +80,9 @@ extern "C" void x11hash(void *output, const void *input)
 	sph_simd512 (&ctx_simd, (const void*) hash, 64);
 	sph_simd512_close(&ctx_simd, (void*) hash);
 
-	sph_echo512_init(&ctx_echo);
-	sph_echo512 (&ctx_echo, (const void*) hash, 64);
-	sph_echo512_close(&ctx_echo, (void*) hash);
+	// sph_echo512_init(&ctx_echo);
+	// sph_echo512 (&ctx_echo, (const void*) hash, 64);
+	// sph_echo512_close(&ctx_echo, (void*) hash);
 
 	memcpy(output, hash, 32);
 }
@@ -124,7 +124,7 @@ extern "C" int scanhash_x11(int thr_id, struct work* work, uint32_t max_nonce, u
 		quark_jh512_cpu_init(thr_id, throughput);
 		x11_luffaCubehash512_cpu_init(thr_id, throughput);
 		x11_shavite512_cpu_init(thr_id, throughput);
-		x11_echo512_cpu_init(thr_id, throughput);
+		// x11_echo512_cpu_init(thr_id, throughput);
 		if (x11_simd512_cpu_init(thr_id, throughput) != 0) {
 			return 0;
 		}
@@ -164,8 +164,8 @@ extern "C" int scanhash_x11(int thr_id, struct work* work, uint32_t max_nonce, u
 		TRACE("shavite:");
 		x11_simd512_cpu_hash_64(thr_id, throughput, pdata[19], NULL, d_hash[thr_id], order++);
 		TRACE("simd   :");
-		x11_echo512_cpu_hash_64(thr_id, throughput, pdata[19], NULL, d_hash[thr_id], order++);
-		TRACE("echo => ");
+		// x11_echo512_cpu_hash_64(thr_id, throughput, pdata[19], NULL, d_hash[thr_id], order++);
+		// TRACE("echo => ");
 
 		*hashes_done = pdata[19] - first_nonce + throughput;
 
